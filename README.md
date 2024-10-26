@@ -8,13 +8,22 @@ PhaseFlux is a Streamlit-based web application that predicts flow regimes in mul
 - Visualize feature contributions using SHAP values
 - Interactive interface for easy data input and result interpretation
 
+## Usage
+1. Enter the required input parameters in the provided fields.
+2. Click the "Predict Flow Regime" button.
+3. View the predicted flow regime and feature contribution analysis.
+
 ## Installation
 
-### Prerequisites
+There are two ways to run PhaseFlux: using Docker or creating a virtual environment.
+
+### Option 1: Using Docker
+
+#### Prerequisites
 - Docker
 - Docker Compose
 
-### Steps
+#### Steps
 1. Clone the repository:
    ```
    git clone https://github.com/benettia/phaseflux.git
@@ -31,10 +40,39 @@ PhaseFlux is a Streamlit-based web application that predicts flow regimes in mul
    http://localhost:8501
    ```
 
-## Usage
-1. Enter the required input parameters in the provided fields.
-2. Click the "Predict Flow Regime" button.
-3. View the predicted flow regime and feature contribution analysis.
+### Option 2: Using Virtual Environment
+
+#### Prerequisites
+- Python 3.9+
+- pip
+
+#### Steps
+1. Clone the repository:
+   ```
+   git clone https://github.com/benettia/phaseflux.git
+   cd phaseflux
+   ```
+
+2. Create and activate a virtual environment:
+   ```
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows, use `.venv\Scripts\activate`
+   ```
+
+3. Install the required packages:
+   ```
+   pip install -r requirements.txt
+   ```
+
+4. Run the Streamlit app:
+   ```
+   streamlit run src/app.py
+   ```
+
+5. Access the application by opening a web browser and navigating to:
+   ```
+   http://localhost:8501
+   ```
 
 ## Important Note
 This application is for demonstration purposes only and should not be used for real-world applications without proper validation and testing.
