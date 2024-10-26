@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  streamlit:
+    build:
+      context: .
+    volumes:
+      - ./src:/app/src
+      - ./requirements.txt:/app/requirements.txt
+    ports:
+      - "8501:8501"
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["streamlit", "run", "src/app.py"]
