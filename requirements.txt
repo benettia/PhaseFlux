@@ -1,5 +1,0 @@
-lightgbm==4.5.0
-pandas==2.2.3
-streamlit==1.39.0
-shap==0.46.0
-plotly==5.24.1

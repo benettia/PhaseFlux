@@ -1,34 +1,36 @@
-import streamlit as st
-import pickle
-import pandas as pd
-import numpy as np
-import shap
-import plotly.express as px
-from typing import Dict, Any
+"""Streamlit app for predicting flow regimes in multiphase flow systems"""
 
-from helpers import (
-    generate_dimensionless_features,
-    MODEL_MARKDOWN_FEATURES,
-    STATES_MAPPING,
-    REVERSE_STATES_MAPPING
-)
+import pickle
+from typing import Any, Dict
+
+import numpy as np
+import pandas as pd
+import plotly.express as px
+import shap
+import streamlit as st
+
+from helpers import (MODEL_MARKDOWN_FEATURES, REVERSE_STATES_MAPPING,
+                     STATES_MAPPING, generate_dimensionless_features)
+
 
 # Load the trained model
 @st.cache_resource
 def load_model():
+    """Load the trained model"""
     with open("./src/model/optuna_lgbm.pkl", "rb") as f:
         model = pickle.load(f)
     return model
 
-model = load_model()
+cached_model = load_model()
 
 st.title("Flow Regime Prediction App")
 
 # Input fields for user data
 st.header("Input Data")
 
-def create_input_field(label: str, min_value: float, value: float, format: str, key: str) -> float:
-    return st.number_input(label, min_value=min_value, value=value, format=format, key=key)
+def create_input_field(label: str, min_value: float, value: float, format_: str, key: str) -> float:
+    """Create an input field for a numeric value"""
+    return st.number_input(label, min_value=min_value, value=value, format=format_, key=key)
 
 # Create a 3x3 grid for input fields
 col1, col2, col3 = st.columns(3)
@@ -46,8 +48,8 @@ with col2:
     input_fields["ST"] = create_input_field("Surface Tension (N/m)", 0.0, 0.072, "%f", "st")
 
 with col3:
-    input_fields["Vsl"] = create_input_field("Superficial Liquid Velocity (m/s)", 0.0, 1.0, "%f", "vsl")
-    input_fields["Vsg"] = create_input_field("Superficial Gas Velocity (m/s)", 0.0, 0.5, "%f", "vsg")
+    input_fields["Vsl"] = create_input_field("Liquid Velocity (m/s)", 0.0, 1.0, "%f", "vsl")
+    input_fields["Vsg"] = create_input_field("Gas Velocity (m/s)", 0.0, 0.5, "%f", "vsg")
     input_fields["Ang"] = create_input_field("Angle (degrees)", -90.0, 0.0, "%f", "ang")
 
 if st.button("Predict Flow Regime"):
@@ -58,15 +60,17 @@ if st.button("Predict Flow Regime"):
     features = generate_dimensionless_features(input_data)
 
     # Make prediction
-    prediction = model.predict_proba(features)
+    prediction = cached_model.predict_proba(features)
     predicted_regime = REVERSE_STATES_MAPPING[np.argmax(prediction)]
 
     # Display results
-    st.markdown("<h2 style='text-align: center;'>Predicted Flow Regime:</h2>", unsafe_allow_html=True)
-    st.markdown(f"<h1 style='text-align: center; color: #1f77b4;'>{predicted_regime}</h1>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center;'>Predicted Flow Regime:</h2>",
+                unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center; color: #1f77b4;'>{predicted_regime}</h1>",
+                unsafe_allow_html=True)
 
     # Calculate SHAP values
-    explainer = shap.TreeExplainer(model)
+    explainer = shap.TreeExplainer(cached_model)
     shap_values = explainer.shap_values(features)
 
     # Display SHAP values
@@ -94,7 +98,7 @@ if st.button("Predict Flow Regime"):
             fig.update_layout(
                 xaxis_title=f"SHAP Value (sum: {sum_of_shap:.2f})",
                 yaxis_title="Feature",
-                yaxis=dict(autorange="reversed"),
+                yaxis={"autorange": "reversed"},
                 coloraxis_showscale=False,
             )
             st.plotly_chart(fig, use_container_width=True)
@@ -109,7 +113,8 @@ in adiabatic conditions. It takes various input parameters related to fluid prop
 and flow conditions, and provides a prediction along with feature importance analysis
 using SHAP values.
 
-Please note that this app is for demonstration purposes only. Do not use it for any real-world applications.
+Please note that this app is for demonstration purposes only.
+Do not use it for any real-world applications.
 """)
 
 st.sidebar.header("Feature Calculations")
@@ -157,5 +162,3 @@ The model uses the following dimensionless features, calculated from the input p
 
 Note: The Fanning friction factors are calculated based on the Reynolds number for each phase.
 """)
-
-
