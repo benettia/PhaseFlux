@@ -21,7 +21,7 @@ repos:
         pass_filenames: false
       - id: autopep8
         name: autopep8
-        entry: autopep8 --in-place --recursive --aggressive .
+        entry: autopep8 --in-place --aggressive --recursive .
         language: system
         always_run: true
         pass_filenames: false
