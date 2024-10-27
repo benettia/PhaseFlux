@@ -9,12 +9,13 @@ import plotly.express as px
 import shap
 import streamlit as st
 
-from helpers import (MODEL_MARKDOWN_FEATURES, REVERSE_STATES_MAPPING,
-                     STATES_MAPPING, generate_dimensionless_features)
+from src.helpers import (MODEL_MARKDOWN_FEATURES, REVERSE_STATES_MAPPING,
+                         STATES_MAPPING, generate_dimensionless_features)
 
 st.set_page_config(page_title="PhaseFlux", page_icon="🌊")
+st.title("Flow Regime Prediction App")
 
-# Load the trained model
+
 @st.cache_resource
 def load_model():
     """Load the trained model"""
@@ -22,36 +23,45 @@ def load_model():
         model = pickle.load(f)
     return model
 
+
 cached_model = load_model()
 
-st.title("Flow Regime Prediction App")
 
-# Input fields for user data
-st.header("Input Data")
-
-def create_input_field(label: str, min_value: float, value: float, format_: str, key: str) -> float:
+def create_input_field(label: str, min_value: float,
+                       value: float, format_: str, key: str) -> float:
     """Create an input field for a numeric value"""
-    return st.number_input(label, min_value=min_value, value=value, format=format_, key=key)
+    return st.number_input(label, min_value=min_value,
+                           value=value, format=format_, key=key)
 
-# Create a 3x3 grid for input fields
+
+st.header("Input Data")
 col1, col2, col3 = st.columns(3)
 
 input_fields: Dict[str, Any] = {}
 
 with col1:
-    input_fields["ID"] = create_input_field("Inner Diameter (m)", 0.0, 0.05, "%f", "id")
-    input_fields["DenL"] = create_input_field("Liquid Density (kg/m³)", 0.0, 1000.0, "%f", "den_l")
-    input_fields["VisL"] = create_input_field("Liquid Viscosity (Pa·s)", 0.0, 1e-3, "%e", "vis_l")
+    input_fields["ID"] = create_input_field(
+        "Inner Diameter (m)", 0.0, 0.05, "%f", "id")
+    input_fields["DenL"] = create_input_field(
+        "Liquid Density (kg/m³)", 0.0, 1000.0, "%f", "den_l")
+    input_fields["VisL"] = create_input_field(
+        "Liquid Viscosity (Pa·s)", 0.0, 1e-3, "%e", "vis_l")
 
 with col2:
-    input_fields["DenG"] = create_input_field("Gas Density (kg/m³)", 0.0, 1.2, "%f", "den_g")
-    input_fields["VisG"] = create_input_field("Gas Viscosity (Pa·s)", 0.0, 1.8e-5, "%e", "vis_g")
-    input_fields["ST"] = create_input_field("Surface Tension (N/m)", 0.0, 0.072, "%f", "st")
+    input_fields["DenG"] = create_input_field(
+        "Gas Density (kg/m³)", 0.0, 1.2, "%f", "den_g")
+    input_fields["VisG"] = create_input_field(
+        "Gas Viscosity (Pa·s)", 0.0, 1.8e-5, "%e", "vis_g")
+    input_fields["ST"] = create_input_field(
+        "Surface Tension (N/m)", 0.0, 0.072, "%f", "st")
 
 with col3:
-    input_fields["Vsl"] = create_input_field("Liquid Velocity (m/s)", 0.0, 1.0, "%f", "vsl")
-    input_fields["Vsg"] = create_input_field("Gas Velocity (m/s)", 0.0, 0.5, "%f", "vsg")
-    input_fields["Ang"] = create_input_field("Angle (degrees)", -90.0, 0.0, "%f", "ang")
+    input_fields["Vsl"] = create_input_field(
+        "Liquid Velocity (m/s)", 0.0, 1.0, "%f", "vsl")
+    input_fields["Vsg"] = create_input_field(
+        "Gas Velocity (m/s)", 0.0, 0.5, "%f", "vsg")
+    input_fields["Ang"] = create_input_field(
+        "Angle (degrees)", -90.0, 0.0, "%f", "ang")
 
 if st.button("Predict Flow Regime"):
     # Prepare input data

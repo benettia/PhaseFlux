@@ -1,5 +1,9 @@
 # PhaseFlux
 
+[![Linting](https://github.com/benettia/phaseflux/actions/workflows/linting.yml/badge.svg)](https://github.com/benettia/phaseflux/actions/workflows/linting.yml)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/downloads/)
+
+
 ## Description
 PhaseFlux is a Streamlit-based web application that predicts flow regimes in multiphase flow systems under adiabatic conditions. It utilizes a LightGBM model to provide predictions based on various input parameters related to fluid properties and flow conditions. The app also offers feature importance analysis using SHAP (SHapley Additive exPlanations) values.
 
@@ -43,7 +47,7 @@ There are two ways to run PhaseFlux: using Docker or creating a virtual environm
 ### Option 2: Using Virtual Environment
 
 #### Prerequisites
-- Python 3.9+
+- Python 3.11+
 - pip
 
 #### Steps
