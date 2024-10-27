@@ -26,6 +26,7 @@ dev = [
     "pylint",
     "ruff",
     "isort",
+    "autopep8",
     "pre-commit",
 ]
 
