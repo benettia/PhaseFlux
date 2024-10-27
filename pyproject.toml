@@ -26,6 +26,7 @@ dev = [
     "pylint",
     "ruff",
     "isort",
+    "pre-commit",
 ]
 
 [tool.setuptools]
@@ -36,3 +37,6 @@ line-length = 100
 
 [tool.pylint.format]
 max-line-length = 100
+
+[tool.pylint.main]
+jobs = 8
