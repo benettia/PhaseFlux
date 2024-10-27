@@ -15,6 +15,7 @@ from src.helpers import (MODEL_MARKDOWN_FEATURES, REVERSE_STATES_MAPPING,
 st.set_page_config(page_title="PhaseFlux", page_icon="🌊")
 st.title("Flow Regime Prediction App")
 
+st.set_page_config(page_title="PhaseFlux", page_icon="🌊")
 
 @st.cache_resource
 def load_model():
