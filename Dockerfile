@@ -1,24 +1,15 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
-RUN apt-get update && apt-get install -y libgomp1
+RUN apt-get update && apt-get install -y libgomp1 && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copy only the requirements file first to leverage Docker cache
-COPY requirements.txt .
+COPY pyproject.toml ./
+COPY src ./src
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir .
 
-# Copy the rest of the application code
-COPY src /app/src
-
-# Expose the port Streamlit runs on
 EXPOSE 8501
 
-# Set environment variable for unbuffered Python output
-ENV PYTHONUNBUFFERED=1
-
-# Command to run the application
 CMD ["streamlit", "run", "src/app.py"]
