@@ -14,8 +14,8 @@ STATES_MAPPING = {
     "Dispersed Bubbly": 1,
     "Intermittent": 2,
     "Stratified Wavy": 3,
-    "Stratified Slug": 4,
-    "Bouncing Bubbly": 5,
+    "Stratified Smooth": 4,
+    "Bubbly": 5,
 }
 REVERSE_STATES_MAPPING = {v: k for k, v in STATES_MAPPING.items()}
 
