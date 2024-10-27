@@ -13,7 +13,7 @@ from src.helpers import (MODEL_MARKDOWN_FEATURES, REVERSE_STATES_MAPPING,
                          STATES_MAPPING, generate_dimensionless_features)
 
 st.set_page_config(page_title="PhaseFlux", page_icon="🌊")
-st.title("Flow Regime Prediction App")
+st.title("MultiPhase Flow Regime Predictor")
 
 
 @st.cache_resource

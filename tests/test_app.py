@@ -15,7 +15,9 @@ class TestApp(unittest.TestCase):
         self.at.run()
 
     def test_page_title(self):
-        self.assertEqual(self.at.title[0].value, "Flow Regime Prediction App")
+        self.assertEqual(
+            self.at.title[0].value,
+            "MultiPhase Flow Regime Predictor")
 
     def test_input_fields(self):
         expected_fields = ["Inner Diameter (m)", "Liquid Density (kg/m³)", "Liquid Viscosity (Pa·s)",
