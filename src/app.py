@@ -4,7 +4,6 @@ import pandas as pd
 import numpy as np
 import shap
 import plotly.express as px
-import plotly.graph_objects as go
 from typing import Dict, Any
 
 from helpers import (
@@ -63,7 +62,7 @@ if st.button("Predict Flow Regime"):
     predicted_regime = REVERSE_STATES_MAPPING[np.argmax(prediction)]
 
     # Display results
-    st.markdown(f"<h2 style='text-align: center;'>Predicted Flow Regime:</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center;'>Predicted Flow Regime:</h2>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: center; color: #1f77b4;'>{predicted_regime}</h1>", unsafe_allow_html=True)
 
     # Calculate SHAP values
