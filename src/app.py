@@ -12,6 +12,7 @@ import streamlit as st
 from helpers import (MODEL_MARKDOWN_FEATURES, REVERSE_STATES_MAPPING,
                      STATES_MAPPING, generate_dimensionless_features)
 
+st.set_page_config(page_title="PhaseFlux", page_icon="🌊")
 
 # Load the trained model
 @st.cache_resource
@@ -77,11 +78,16 @@ if st.button("Predict Flow Regime"):
     st.header("Feature Contributions")
     tabs = st.tabs(list(STATES_MAPPING.keys()))
 
+    all_regime_shap = []
     for i, (regime, tab) in enumerate(zip(STATES_MAPPING.keys(), tabs)):
         with tab:
-            regime_shap = pd.DataFrame(
-                {"Feature": MODEL_MARKDOWN_FEATURES, "SHAP Value": shap_values[:, :, i][0]}
-            ).sort_values("SHAP Value", key=abs, ascending=False)
+            regime_shap = pd.DataFrame({
+                "Feature": MODEL_MARKDOWN_FEATURES,
+                "Value": features.values[0],
+                "SHAP Value": shap_values[:, :, i][0]
+            }).sort_values("SHAP Value", key=abs, ascending=False)
+
+            all_regime_shap.append(regime_shap.assign(Regime=regime))
 
             # Plot the SHAP values using a horizontal bar plot
             fig = px.bar(
@@ -93,6 +99,8 @@ if st.button("Predict Flow Regime"):
                 color="SHAP Value",
                 color_continuous_scale=["#ff4d4d", "#4d4dff"],
                 height=400,
+                hover_data=["Value"],
+                custom_data=["Value"]
             )
             sum_of_shap = regime_shap["SHAP Value"].sum()
             fig.update_layout(
@@ -101,9 +109,12 @@ if st.button("Predict Flow Regime"):
                 yaxis={"autorange": "reversed"},
                 coloraxis_showscale=False,
             )
+            fig.update_traces(
+                hovertemplate=(
+                    "<b>%{y}</b><br>Feature Value: %{customdata[0]:.4f}<br>SHAP Value: %{x:.4f}"
+                )
+            )
             st.plotly_chart(fig, use_container_width=True)
-
-
 
 
 st.sidebar.header("About")
