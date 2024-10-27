@@ -4,7 +4,7 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/downloads/)
 
 ## Try it Now!
-Visit [www.phaseflow.com](http://www.phaseflow.com) to use PhaseFlux directly in your browser - no installation required!
+Visit [www.phaseflux.com](http://www.phaseflux.com) to use PhaseFlux directly in your browser - no installation required!
 
 ## Description
 PhaseFlux is a Streamlit-based web application that predicts flow regimes in multiphase flow systems under adiabatic conditions. It utilizes a LightGBM model to provide predictions based on various input parameters related to fluid properties and flow conditions. The app also offers feature importance analysis using SHAP (SHapley Additive exPlanations) values.
@@ -17,7 +17,7 @@ This app is for demonstration purposes only and should not be used for real-worl
 - Advanced feature contribution analysis using SHAP values
 
 ## Online Usage
-1. Navigate to [www.phaseflow.com](http://www.phaseflow.com)
+1. Navigate to [www.phaseflux.com](http://www.phaseflux.com)
 2. Enter your flow parameters in the input fields
 3. Click "Predict Flow Regime" to get instant results
 4. Explore the SHAP analysis to understand prediction factors
