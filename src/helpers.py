@@ -77,7 +77,8 @@ def calculate_fanning(reynolds: pd.Series) -> pd.Series:
     fanning = 16 / reynolds
     mask = reynolds > 2300
     fanning[mask] = 0.0625 / (
-        np.log10((150.39 / (reynolds[mask] ** 0.98865)) - (152.66 / reynolds[mask]))
+        np.log10(
+            (150.39 / (reynolds[mask] ** 0.98865)) - (152.66 / reynolds[mask]))
         ** 2
     )
     return fanning
