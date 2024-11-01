@@ -94,7 +94,7 @@ This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE
 
 ## How to Cite
 
-If you use this model in your research, please cite it as follows:
+The model used for this app is from: 
 
 ```bibtex
 @misc{alma9963263908776,
