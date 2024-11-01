@@ -91,3 +91,18 @@ We welcome contributions to PhaseFlux! Whether it's bug fixes, feature additions
 
 ## License
 This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
+
+## How to Cite
+
+If you use this model in your research, please cite it as follows:
+
+```bibtex
+@misc{alma9963263908776,
+  author = {Benetti, Alessandro},
+  title = {Flow regime estimation in two-phase flows employing machine learning: Investigation of the most promising dimensionless feature set},
+  year = {2021},
+  keywords = {flow regime estimation, two-phase flow, machine learning, feature selection, algorithm optimization},
+  language = {English}
+}
+```
+
